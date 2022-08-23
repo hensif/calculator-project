@@ -1,32 +1,104 @@
-let btn = document.querySelector('button')
+class Calculator {
+    constructor(previousSelectionTextElement, currentSelectionTextElement) {
+        this.previousSelectionTextElement = previousSelectionTextElement
+        this.currentSelectionTextElement = currentSelectionTextElement
+        this.clear()
+    }
 
-let nums = document.querySelectorAll('.dig');
+    clear() {
+        this.currentSelection = ''
+        this.previousSelection = ''
+        this.operation = undefined
+    }
 
+    delete() {
+        this.currentSelection = this.currentSelection.toString().slice(0, -1)
+    }
 
+    appendNumber(number) {
+        if (number === '.' && this.currentSelection.includes('.')) return
+        this.currentSelection = this.currentSelection + number.toString();
+    }
 
-    nums.forEach(num => {
-        num.addEventListener('click', (e) => {
-            console.log(num.dataset.value);
-        });
-        });
+    chooseOperation(operation) {
+        if (this.currentSelection === '') return
+        if (this.previousSelection !== '') {
+            this.compute()
+        }
+       this.operation = operation
+       this.previousSelection = this.currentSelection
+       this.currentSelection = ''; 
+    }
 
-function add(a, b) {
-    return a + b;
+    compute() {
+        let computation
+        const prev = parseFloat(this.previousSelection)
+        const current = parseFloat(this.currentSelection)
+        if (isNaN(prev) || isNaN(current)) return
+        switch (this.operation) {
+            case '+':
+                computation = prev + current
+                break
+            case '-':
+                computation = prev - current
+                break
+            case 'x':
+                computation = prev * current
+                break
+            case '/':
+                computation = prev / current
+                break
+            default:
+                return
+                
+                
+        }
+        this.currentSelection = computation
+        this.operation = undefined
+        this.previousSelection = ''
+    }
+
+    updateDisplay() {
+        this.currentSelectionTextElement.innerText = this.currentSelection
+        this.previousSelectionTextElement.innerText = this.previousSelection
+    }
 }
 
-function subtract(a, b) {
-    return a - b;
-}
+const numberButtons = document.querySelectorAll('[data-number]')
+const operationButtons = document.querySelectorAll('[data-operation]')
+const equalsButton = document.querySelector('[data-equals]')
+const deleteButton = document.querySelector('[data-delete]')
+const allClearButton = document.querySelector('[data-all-clear]')
+const previousSelectionTextElement = document.querySelector('[data-previous-selection]')
+const currentSelectionTextElement = document.querySelector('[data-current-selection]')
 
-function multiply(a, b) {
-    return a * b;
-}
+const calculator = new Calculator(previousSelectionTextElement, currentSelectionTextElement)
 
-function divide(a, b) {
-    return a / b;
-}
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.appendNumber(button.innerText)
+        calculator.updateDisplay();
+    })
+})
 
-function operate(operator, a, b) {
-    return operator(a, b);
-}
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText)
+        calculator.updateDisplay();
+    })
+})
 
+equalsButton.addEventListener('click', button => {
+    calculator.compute()
+    calculator.updateDisplay()
+})
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear()
+    calculator.updateDisplay()
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete()
+    calculator.updateDisplay()
+})

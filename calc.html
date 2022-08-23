@@ -9,29 +9,30 @@
     <title>Calculator</title>
 </head>
 <body>
-    <div class="display"></div>
-        <h1 class="branding"></h1>
-        <input type="text">
-    <div class="functions">
-        <button class="add">+</button>
-        <button class="subtract">-</button>
-        <button class="multiply">x</button>
+    <div class="calculator-grid">
+    <div class="display">
+        <div data-previous-selection class="previous-selection"></div>
+        <div data-current-selection class="current-selection"></div>
+    </div>
+        <button data-all-clear class="width-two">AC</button>
+        <button data-delete>DEL</button>
         <button class="divide">/</button>
-    </div>
-    <div class="numpad">
-        <button class="dec">.</button>
-        <button class="dig" data-value="0">0</button>
-        <button class="dig" data-value="1">1</button>
-        <button class="dig" data-value="2">2</button>
-        <button class="dig" data-value="3">3</button>
-        <button class="dig" data-value="4">4</button>
-        <button class="dig" data-value="5">5</button>
-        <button class="dig" data-value="6">6</button>
-        <button class="dig" data-value="7">7</button>
-        <button class="dig" data-value="8">8</button>
-        <button class="dig" data-value="9">9</button>
-        <button class="clear">AC</button>
-    </div>
+        <button data-number>1</button>
+        <button data-number>2</button>
+        <button data-number>3</button>
+        <button data-operation>x</button>
+        <button data-number>4</button>
+        <button data-number>5</button>
+        <button data-number>6</button>
+        <button data-operation>+</button>
+        <button data-number>7</button>
+        <button data-number>8</button>
+        <button data-number>9</button>
+        <button data-operation>-</button>
+        <button data-number>.</button>
+        <button data-number>0</button>
+        <button data-equals class="width-two">=</button>
+</div>
 
 </body>
 </html>
